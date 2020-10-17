@@ -22,6 +22,8 @@ function displayColumns(value) {
             + '<td class="category_id">'+ (value.category ? value.category.name : value.category_id) +'</td>'
             + '<td class="name">'+value.name+'</td>'
 			+ '<td class="description">'+value.description+'</td>'
+			//modificare
+			+ '<td class="price">'+value.price+'</td>'
 			+ '<td align="center">'
 			+	'<button onclick="viewRecord('+ value.id +')" class="btn btn-edit">Update</button>'
 			+ '</td>'
@@ -35,6 +37,8 @@ function addRecord() {
     $('#category_id').val('');
     $('#name').val('');
     $('#description').val('');
+    //modificare
+    $('#price').val('');
     
     $('#myModalLabel').html('Add New Product');
 }
@@ -58,12 +62,16 @@ function viewRecord(id) {
 function saveRecord() {
     //get data from the html form
     var formData = $('#record_form').serializeObject();
-    
+    if(formData.name==''){
+        window.alert("Produsul trebuie sa aiba cel putin un nume")
+    }
+    else{
     //decide if it's an edit or create
     if(formData.id) {
         updateRecord(formData);
     } else {
         createRecord(formData);
+    }
     }
 }
 
@@ -98,8 +106,12 @@ function updateRecord(formData) {
             $('#row_id_'+formData.id+'>td.category_id').html(formData.category_id);
             $('#row_id_'+formData.id+'>td.name').html(formData.name);
             $('#row_id_'+formData.id+'>td.description').html(formData.description);
+            //modificare
+            $('#row_id_'+formData.id+'>td.price').html(formData.price);
             $('#add_new_record_modal').modal('hide');
+           
         } 
+         
     });
 }
 
